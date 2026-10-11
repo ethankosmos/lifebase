@@ -1,6 +1,6 @@
 // Offline support: the app shell is cached so LifeBase opens without a connection.
 // Your data never passes through here; it lives in this browser's storage.
-const CACHE = 'lifebase-27e6874b1e';
+const CACHE = 'lifebase-d324860eb7';
 const SHELL = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

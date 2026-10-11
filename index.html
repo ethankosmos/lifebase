@@ -3452,7 +3452,12 @@ function renderOverview(){
 
 {const W=(fn,tab)=>()=>{fn();filterTab(tab);if(route==='home'&&tab!=='community')renderOverview()};
   renderMoney=W(renderMoney,'money');renderProperty=W(renderProperty,'property');renderJobs=W(renderJobs,'jobs');renderHealth=W(renderHealth,'health');renderPeople=W(renderPeople,'people');renderCommunity=W(renderCommunity,'community')}
-function renderAll(){renderHeader();renderTasks();renderCal();renderPlanTrends();renderMoney();renderProperty();renderJobs();renderHealth();renderPeople();renderCommunity();renderPage();renderOverview()}
+function migrateLegacy(){const OLDP='k'+'os',OLDV='k'+'osmos',NEWP='biz',NEWV='venture';if(OLDP===NEWP)return;let ch=false;
+  const l=S.life;if(l){for(const g of l.programs||[])if(g.id===OLDP){g.id=NEWP;ch=true}for(const p of l.projects||[])if(p.programId===OLDP){p.programId=NEWP;ch=true}for(const g of l.goals||[])if(g.metric===OLDV){g.metric=NEWV;ch=true}}
+  for(const t of (S.plan&&S.plan.tasks)||[])if(t.ventureId===OLDV){t.ventureId=NEWV;ch=true}
+  for(const j of (S.jobs&&S.jobs.items)||[])if(j.checks&&('clear'+'ance') in j.checks&&!('strengths' in j.checks)){j.checks.strengths=j.checks['clear'+'ance'];ch=true}
+  if(ch){save('life');save('plan');save('jobs')}}
+function renderAll(){migrateLegacy();renderHeader();renderTasks();renderCal();renderPlanTrends();renderMoney();renderProperty();renderJobs();renderHealth();renderPeople();renderCommunity();renderPage();renderOverview()}
 renderAll();scrollToMorning();
 setInterval(()=>{if(!drag){renderHeader();{const on=$('#ovNext');if(on)on.innerHTML=$('#nextUp').innerHTML}if(route==='home'&&!$('#modalRoot').firstChild)renderCal()}},60000);
 let rzT,rzW=innerWidth;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(innerWidth<760&&ui.days===7)ui.days=1;if(Math.abs(innerWidth-rzW)>40&&!drag&&!$('#modalRoot').firstChild){rzW=innerWidth;renderAll()}else renderCal()},200)});
@@ -3463,7 +3468,7 @@ initStore();commInit();
 
 <script>
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-  addEventListener('load', () => navigator.serviceWorker.register('sw.js?v=27e6874b1e').catch(() => {}));
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js?v=d324860eb7').catch(() => {}));
 }
 </script>
 </body>
