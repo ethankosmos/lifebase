@@ -1,0 +1,20 @@
+name = "lifebase-ai"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Create the counter store with:  npx wrangler kv namespace create USAGE
+# then paste the id it prints below.
+[[kv_namespaces]]
+binding = "USAGE"
+id = "PASTE_KV_NAMESPACE_ID_HERE"
+
+[vars]
+# The address(es) your app is served from, comma-separated, e.g. https://yourname.github.io
+ALLOWED_ORIGINS = "https://YOUR-GITHUB-USERNAME.github.io"
+# AI requests each person (device) gets per month
+MONTHLY_LIMIT = "100"
+# AI requests across everyone per month: your hard ceiling on cost
+GLOBAL_MONTHLY_LIMIT = "1000"
+
+# Your Anthropic API key is a secret, never put it in this file. Set it with:
+#   npx wrangler secret put ANTHROPIC_API_KEY
